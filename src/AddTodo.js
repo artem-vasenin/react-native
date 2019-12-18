@@ -30,6 +30,12 @@ export const AddTodo = ({ onSubmit }) => {
                 /** получаем значение value из стейта */
                 value={value}
                 placeholder='Введите название'
+                /** отключаем автокоррект Т9 */
+                autoCorrect={false}
+                /** отключаем написание с большой буквы */
+                autoCapitalize='none'
+                /** выбираем какую клаву показать */
+                keyboardType='default'
             />
             <Button
                 style={styles.btn}
