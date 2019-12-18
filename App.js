@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Navbar } from './src/Navbar';
 import { AddTodo } from './src/AddTodo';
 import { Todo } from './src/Todo';
@@ -20,14 +20,15 @@ export default function App() {
     <View style={styles.container}>
       <Navbar title='Приложение на React Native' />
       <AddTodo onSubmit={addTodo} />
-      <View>
+      <ScrollView>
         { todos.map(item => <Todo key={item.id} todo={item} />)}
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingBottom: 20,
   },
 });
