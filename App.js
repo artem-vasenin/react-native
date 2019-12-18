@@ -28,7 +28,12 @@ export default function App() {
       todos={todos}
       SetTodo={SetTodo}
       RemoveTodo={RemoveTodo}
-    /> : <TodoScreen />
+      OpenTask={setTodoId}
+    /> :
+    <TodoScreen
+      GoBack={() => setTodoId(null)}
+      todo={todos.find(item => item.id === todoId)}
+    />
 
   return (
     <View style={styles.container}>

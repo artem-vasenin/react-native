@@ -6,11 +6,11 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-export const Todo = ({ todo, onDel }) => {
+export const Todo = ({ todo, onDel, onOpen }) => {
     return (
         <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => console.log('Pressed', todo.id)}
+            onPress={() => onOpen(todo.id)}
             onLongPress={() => onDel(todo.id)}
         >
             <View style={styles.todo}>
