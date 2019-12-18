@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Alert
 } from 'react-native';
+import { THEME } from '../../theme';
 
 export const AddTodo = ({ onSubmit }) => {
     /** Создаем локальный стейт с начальным значением '' */
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
         width: '70%',
         borderStyle: 'solid',
         borderWidth: 2,
-        borderColor: '#ddd',
+        borderColor: THEME.COLOR_STANDART,
         padding: 3,
     },
     btn: {}
