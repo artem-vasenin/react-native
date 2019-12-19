@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    TouchableNativeFeedback,
+    Platform,
+} from 'react-native';
 import { AppTextBold } from './AppTextBold';
 import { THEME } from '../../theme';
 
@@ -9,8 +15,10 @@ export const AppButton = ({
     color=THEME.COLOR_STANDART,
     textColor='white'
 }) => {
+    /** Проверяем какая операционная система, и если андроид то ставим эффект который не поддерживает яблоко иначе ставим другой компонент */
+    const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     return (
-        <TouchableOpacity onPress={onPress}>
+        <Wrapper onPress={onPress}>
             <View
                 style ={{...styles.button, backgroundColor: color}}
             >
@@ -18,7 +26,7 @@ export const AppButton = ({
                     style ={{...styles.text, color: textColor}}
                 >{children}</AppTextBold>
             </View>
-        </TouchableOpacity>
+        </Wrapper>
     );
 };
 
