@@ -6,10 +6,21 @@ import {
   Button,
   Modal,
   TextInput,
+  Alert,
 } from 'react-native';
 import { THEME } from '../../theme';
 
-export const EditTask = ({visible, onCalcel}) => {
+export const EditTask = ({visible, onCalcel, value, onSave}) => {
+    const [title, setTitle] = useState(value);
+
+    const Save = () => {
+        if (title.trim().length < 3) {
+            Alert.alert('Ошибка!', `Минимальная длина названия 3 символа, а сейчас ${title.trim().length} символов`)
+        } else {
+            onSave(title);
+        }
+    };
+
     return (
         <Modal
             visible={visible}
@@ -23,6 +34,8 @@ export const EditTask = ({visible, onCalcel}) => {
                     autoCapitalize='none'
                     autoCorrect={false}
                     maxLength={64}
+                    value={title}
+                    onChangeText={setTitle}
                 />
                 <View style={styles.actions}>
                     <Button
@@ -33,6 +46,7 @@ export const EditTask = ({visible, onCalcel}) => {
                     <Button
                         title='Сохранить'
                         color={THEME.COLOR_PRIMARY}
+                        onPress={Save}
                     />
                 </View>
             </View>

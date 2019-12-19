@@ -36,6 +36,15 @@ export default function App() {
     );
   };
 
+  const UpdateTask = (id, title) => {
+    setTodos(old => old.map(item => {
+      if (item.id === id) {
+        item.title = title;
+      }
+      return item;
+    }))
+  };
+
   let content = !todoId ?
     <MainScreen
       todos={todos}
@@ -47,6 +56,7 @@ export default function App() {
       GoBack={() => setTodoId(null)}
       todo={todos.find(item => item.id === todoId)}
       DelTask={RemoveTodo}
+      onSave={UpdateTask}
     />
 
   return (
