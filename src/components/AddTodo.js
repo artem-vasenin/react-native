@@ -6,6 +6,9 @@ import {
     StyleSheet,
     Alert
 } from 'react-native';
+/** Подключаем пакет для иконок */
+import { AntDesign } from '@expo/vector-icons';
+
 import { THEME } from '../../theme';
 
 export const AddTodo = ({ onSubmit }) => {
@@ -38,11 +41,12 @@ export const AddTodo = ({ onSubmit }) => {
                 /** выбираем какую клаву показать */
                 keyboardType='default'
             />
-            <Button
-                style={styles.btn}
-                title="Добавить"
+            <AntDesign.Button
+                name="pluscircleo"
+                size={24}
+                color="white"
                 onPress={Submit}
-            />
+            >Добавить</AntDesign.Button>
         </View>
     );
 };
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     input: {
-        width: '70%',
+        width: '65%',
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: THEME.COLOR_STANDART,
