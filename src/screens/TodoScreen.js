@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,15 +7,20 @@ import {
 } from 'react-native';
 import { THEME } from '../../theme';
 import { AppCard } from '../ui/AppCard';
+import { EditTask } from '../components/EditTask';
 
 export const TodoScreen = ({GoBack, todo, DelTask}) => {
+  const [modal, setModal] = useState(false);
+
     return (
         <View>
+          <EditTask visible={modal} onCalcel={() => setModal(false)} />
+
             <AppCard style={styles.card}>
               <Text style={styles.cardTitle}>{todo.title}</Text>
               <Button
                     title='Редактировать'
-                    onPress={GoBack}
+                    onPress={() => setModal(true)}
                     color={THEME.COLOR_STANDART}
                 />
             </AppCard>
