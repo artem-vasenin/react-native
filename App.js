@@ -21,7 +21,7 @@ export default function App() {
   };
 
   const RemoveTodo = id => {
-    const item = todos.find(item => item.id !== id);
+    const item = todos.find(item => item.id === id);
     Alert.alert(
       'Удалить элемент',
       `Точно надо удалить ${item.title}`,
