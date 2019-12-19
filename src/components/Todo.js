@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
     },
     title: {
-        color: '#555'
+        color: '#555',
+        fontFamily: 'roboto-b'
     }
 });
