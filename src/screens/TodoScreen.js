@@ -8,7 +8,7 @@ import {
 import { THEME } from '../../theme';
 import { AppCard } from '../ui/AppCard';
 
-export const TodoScreen = ({GoBack, todo}) => {
+export const TodoScreen = ({GoBack, todo, DelTask}) => {
     return (
         <View>
             <AppCard style={styles.card}>
@@ -31,7 +31,7 @@ export const TodoScreen = ({GoBack, todo}) => {
               <View style={styles.btn}>
                 <Button
                     title='Удалить'
-                    onPress={GoBack}
+                    onPress={() => DelTask(todo.id)}
                     color={THEME.COLOR_DANGER}
                 />
               </View>

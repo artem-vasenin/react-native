@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
+  Alert,
   View
 } from 'react-native';
 import { Navbar } from './src/components/Navbar';
@@ -20,7 +21,19 @@ export default function App() {
   };
 
   const RemoveTodo = id => {
-    setTodos(prev => prev.filter(item => item.id !== id));
+    const item = todos.find(item => item.id !== id);
+    Alert.alert(
+      'Удалить элемент',
+      `Точно надо удалить ${item.title}`,
+      [
+        { text: 'Отмена', style: 'cancel' },
+        {text: 'Удалить', style: 'destructive', onPress: () => {
+          setTodoId(null);
+          setTodos(prev => prev.filter(item => item.id !== id));
+        }},
+      ],
+      {cancelable: false},
+    );
   };
 
   let content = !todoId ?
@@ -33,6 +46,7 @@ export default function App() {
     <TodoScreen
       GoBack={() => setTodoId(null)}
       todo={todos.find(item => item.id === todoId)}
+      DelTask={RemoveTodo}
     />
 
   return (
