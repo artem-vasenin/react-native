@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     View,
     TextInput,
-    Button,
+    Keyboard,
     StyleSheet,
     Alert
 } from 'react-native';
@@ -22,6 +22,7 @@ export const AddTodo = ({ onSubmit }) => {
         } else {
             onSubmit(value);
             setValue('');
+            Keyboard.dismiss();
         }
     };
 
