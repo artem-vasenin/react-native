@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Button,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { THEME } from '../../theme';
 import { AppCard } from '../ui/AppCard';
 import { EditTask } from '../components/EditTask';
 import { AppTextBold } from '../ui/AppTextBold';
+import { AppButton } from '../ui/AppButton';
 
 export const TodoScreen = ({GoBack, todo, DelTask, onSave}) => {
   const [modal, setModal] = useState(false);
@@ -30,27 +28,37 @@ export const TodoScreen = ({GoBack, todo, DelTask, onSave}) => {
             <AppTextBold style={styles.cardTitle}>
               {todo.title}
             </AppTextBold>
-            <Button
-                  title='Редактировать'
-                  onPress={() => setModal(true)}
-                  color={THEME.COLOR_STANDART}
-              />
+            <AppButton onPress={() => setModal(true)}>
+              <FontAwesome
+                name='edit'
+                size={20}
+                style={{marginRight: 10}}
+              />&nbsp;Редактировать
+            </AppButton>
           </AppCard>
 
           <View style={styles.actions}>
             <View style={styles.btn}>
-              <Button
-                  title='Назад'
-                  onPress={GoBack}
-                  color={THEME.COLOR_STANDART}
-              />
+              <AppButton
+                onPress={GoBack}
+                color={THEME.COLOR_STANDART}
+              >
+                <AntDesign name='back' size={20} color='white'/>
+                  &nbsp;Назад
+              </AppButton>
             </View>
             <View style={styles.btn}>
-              <Button
-                  title='Удалить'
-                  onPress={() => DelTask(todo.id)}
-                  color={THEME.COLOR_DANGER}
+              <AppButton
+                onPress={() => DelTask(todo.id)}
+                color={THEME.COLOR_DANGER}
+              >
+                Удалить&nbsp;
+                <FontAwesome
+                name='remove'
+                size={20}
+                style={{marginRight: 10}}
               />
+              </AppButton>
             </View>
           </View>
       </View>

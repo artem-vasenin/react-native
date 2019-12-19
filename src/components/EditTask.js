@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Button,
   Modal,
   TextInput,
   Alert,
 } from 'react-native';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { THEME } from '../../theme';
+import { AppButton } from '../ui/AppButton';
 
 export const EditTask = ({visible, onCalcel, value, onSave}) => {
     const [title, setTitle] = useState(value);
@@ -38,16 +39,25 @@ export const EditTask = ({visible, onCalcel, value, onSave}) => {
                     onChangeText={setTitle}
                 />
                 <View style={styles.actions}>
-                    <Button
-                        title='Отменить'
-                        onPress={onCalcel}
-                        color={THEME.COLOR_STANDART}
-                    />
-                    <Button
-                        title='Сохранить'
-                        color={THEME.COLOR_PRIMARY}
+                    <AppButton onPress={onCalcel}>
+                        <FontAwesome
+                            name='remove'
+                            size={20}
+                            style={{marginRight: 10}}
+                        />&nbsp;Отменить
+                    </AppButton>
+
+                    <AppButton
                         onPress={Save}
-                    />
+                        color={THEME.COLOR_PRIMARY}
+                    >
+                        Сохранить&nbsp;
+                        <FontAwesome
+                            name='save'
+                            size={20}
+                            style={{marginRight: 10}}
+                        />
+                    </AppButton>
                 </View>
             </View>
         </Modal>
