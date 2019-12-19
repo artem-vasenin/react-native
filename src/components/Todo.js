@@ -1,10 +1,10 @@
 import React from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
+import { AppTextBold } from '../ui/AppTextBold'
 
 export const Todo = ({ todo, onDel, onOpen }) => {
     return (
@@ -14,7 +14,9 @@ export const Todo = ({ todo, onDel, onOpen }) => {
             onLongPress={() => onDel(todo.id)}
         >
             <View style={styles.todo}>
-                <Text style={styles.title}>{todo.title}</Text>
+                <AppTextBold style={styles.title}>
+                    {todo.title}
+                </AppTextBold>
             </View>
         </TouchableOpacity>
     );
@@ -30,6 +32,5 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#555',
-        fontFamily: 'roboto-b'
     }
 });
