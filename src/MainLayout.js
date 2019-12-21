@@ -1,21 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { Navbar } from './components/Navbar';
 import { MainScreen } from './screens/MainScreen';
 import { TodoScreen } from './screens/TodoScreen';
 import { TodoContext } from './context/todo/TodoContext';
+import { ScreenContext } from './context/screen/ScreenContext';
 
 export const MainLayout = () => {
-  const {todos, AddTodo, RemoveTodo, UpdateTodo} = useContext(TodoContext);
-  const [todoId, setTodoId] = useState(null);
-  // const [todos, setTodos] = useState([]);
-
-  // const SetTodo = (title) => {
-  //   setTodos(prev => [...prev, {
-  //     id: Date.now().toString(),
-  //     title,
-  //   }]);
-  // };
+  const {
+    todos,
+    AddTodo,
+    RemoveTodo,
+    UpdateTodo,
+  } = useContext(TodoContext);
+  const { todoId, ChangeScreen } = useContext(ScreenContext);
 
   // const RemoveTodo = id => {
   //   const item = todos.find(item => item.id === id);
@@ -33,24 +31,15 @@ export const MainLayout = () => {
   //   );
   // };
 
-  // const UpdateTask = (id, title) => {
-  //   setTodos(old => old.map(item => {
-  //     if (item.id === id) {
-  //       item.title = title;
-  //     }
-  //     return item;
-  //   }))
-  // };
-
   let content = !todoId ?
     <MainScreen
       todos={todos}
       SetTodo={AddTodo}
       RemoveTodo={RemoveTodo}
-      OpenTask={setTodoId}
+      OpenTask={ChangeScreen}
     /> :
     <TodoScreen
-      GoBack={() => setTodoId(null)}
+      GoBack={() => ChangeScreen(null)}
       todo={todos.find(item => item.id === todoId)}
       DelTask={RemoveTodo}
       onSave={UpdateTodo}
