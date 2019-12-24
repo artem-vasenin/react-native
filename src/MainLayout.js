@@ -32,12 +32,7 @@ export const MainLayout = () => {
   // };
 
   let content = !todoId ?
-    <MainScreen
-      todos={todos}
-      SetTodo={AddTodo}
-      RemoveTodo={RemoveTodo}
-      OpenTask={ChangeScreen}
-    /> :
+    <MainScreen /> :
     <TodoScreen
       GoBack={() => ChangeScreen(null)}
       todo={todos.find(item => item.id === todoId)}
@@ -46,10 +41,10 @@ export const MainLayout = () => {
     />
   
     return (
-        <View style={styles.container}>
-            <Navbar title='Приложение на React Native' />
-            {content}
-        </View>
+      <View style={styles.container}>
+        <Navbar title='Приложение на React Native' />
+        {content}
+      </View>
     );
 };
 
