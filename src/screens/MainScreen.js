@@ -6,11 +6,12 @@ import {
   Image
 } from 'react-native';
 import { Todo } from '../components/Todo';
+import { AddTodo } from '../components/AddTodo';
 import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/ScreenContext';
 
 export const MainScreen = () => {
-    const { AddTodo, todos, RemoveTodo } = useContext(TodoContext);
+    const { addTodo, todos, RemoveTodo } = useContext(TodoContext);
     const { ChangeScreen } = useContext(ScreenContext);
     let content = (<FlatList
     data={todos}
@@ -37,7 +38,7 @@ export const MainScreen = () => {
 
     return (
         <View style={styles.container}>
-            <AddTodo onSubmit={AddTodo} />
+            <AddTodo onSubmit={addTodo} />
             {content}
         </View>
     );

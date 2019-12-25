@@ -22,7 +22,7 @@ const handlers = {
     DEFAULT: state => state,
 };
 
-export const TodoReduser = (state, action) => {
+export const TodoReducer = (state, action) => {
     const handler = handlers[action.type] || handlers.DEFAULT;
     return handler(state, action);
 };
