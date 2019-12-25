@@ -29,7 +29,6 @@ export const MainScreen = () => {
                 <Image
                     style={styles.img}
                     source={require('../../assets/rn.png')}
-                    // source={{uri: 'https://androiddev.apptractor.ru/wp-content/uploads/2018/07/react-native-1.png'}}
                     resizeMode='contain'
                 ></Image>
             </View>
