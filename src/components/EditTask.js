@@ -2,16 +2,15 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
-  Button,
   Modal,
   TextInput,
   Alert,
 } from 'react-native';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../../theme';
 import { AppButton } from '../ui/AppButton';
 
-export const EditTask = ({visible, onCalcel, value, onSave}) => {
+export const EditTask = ({ visible, onCalcel, value, onSave }) => {
     const [title, setTitle] = useState(value);
 
     const Save = () => {
@@ -20,6 +19,11 @@ export const EditTask = ({visible, onCalcel, value, onSave}) => {
         } else {
             onSave(title);
         }
+    };
+
+    const CancelHandler = () => {
+        setTitle(value)
+        onCalcel();
     };
 
     return (
@@ -39,7 +43,7 @@ export const EditTask = ({visible, onCalcel, value, onSave}) => {
                     onChangeText={setTitle}
                 />
                 <View style={styles.actions}>
-                    <AppButton onPress={onCalcel}>
+                    <AppButton onPress={CancelHandler}>
                         <FontAwesome
                             name='remove'
                             size={20}
