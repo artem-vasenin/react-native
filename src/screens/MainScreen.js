@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useCallback} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,8 +11,25 @@ import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/ScreenContext';
 
 export const MainScreen = () => {
-    const { addTodo, todos, RemoveTodo } = useContext(TodoContext);
+    const {
+        addTodo,
+        todos,
+        RemoveTodo,
+        FetchTodos,
+        loading,
+        error,
+    } = useContext(TodoContext);
     const { ChangeScreen } = useContext(ScreenContext);
+
+    const LoadTodos = useCallback(
+        async () => await FetchTodos(),
+        [FetchTodos],
+    );
+
+    useEffect(() => {
+        LoadTodos();
+    }, []);
+
     let content = (<FlatList
     data={todos}
     renderItem={({ item }) => <Todo
