@@ -2,11 +2,23 @@ import React, { useReducer, useContext } from 'react';
 import { Alert } from 'react-native';
 import { TodoContext } from './TodoContext';
 import { TodoReducer } from './TodoReducer';
-import { ADD_TODO, REMOVE_TODO, UPDATE_TODO } from '../types';
+import {
+    ADD_TODO,
+    REMOVE_TODO,
+    UPDATE_TODO,
+    SHOW_LOADER,
+    HIDE_LOADER,
+    SHOW_ERROR,
+    CLEAR_ERROR,
+} from '../types';
 import { ScreenContext } from '../screen/ScreenContext';
 
 export const TodoState = ({children}) => {
-    const initialState = { todos: [] };
+    const initialState = {
+        todos: [],
+        loading: false,
+        error: null,
+    };
     const { ChangeScreen } = useContext(ScreenContext);
     const [state, dispatch] = useReducer(TodoReducer, initialState);
 
@@ -34,6 +46,14 @@ export const TodoState = ({children}) => {
         id,
         title,
     });
+
+    const ShowLoader = () => dispatch({ type: SHOW_LOADER });
+
+    const HideLoader = () => dispatch({ type: HIDE_LOADER });
+
+    const ShowError = err => dispatch({ type: SHOW_ERROR, error });
+
+    const ClearError = () => dispatch({ type: CLEAR_ERROR });
 
     return (
         <TodoContext.Provider value={{
