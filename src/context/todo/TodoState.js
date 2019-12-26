@@ -78,11 +78,30 @@ export const TodoState = ({children}) => {
         
     };
 
-    const UpdateTodo = (id, title) => dispatch({
-        type: UPDATE_TODO,
-        id,
-        title,
-    });
+    const UpdateTodo = async (id, title) => {
+        ShowLoader();
+        ClearError();
+        try {
+            await fetch(
+                `https://react-native-1508e.firebaseio.com/todos/${id}.json`,
+                {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({title}),
+                }
+            );
+            dispatch({
+                type: UPDATE_TODO,
+                id,
+                title,
+            });
+        } catch (e) {
+            ShowError('Что-то не обновляется элемент... ;(');
+            console.log(e);
+        } finally {
+            HideLoader();
+        }
+    };
 
     const ShowLoader = () => dispatch({ type: SHOW_LOADER });
 
