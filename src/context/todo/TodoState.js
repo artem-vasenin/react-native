@@ -13,6 +13,7 @@ import {
     FETCH_TODOS,
 } from '../types';
 import { ScreenContext } from '../screen/ScreenContext';
+import { Http } from '../../http';
 
 export const TodoState = ({children}) => {
     const initialState = {
@@ -25,31 +26,29 @@ export const TodoState = ({children}) => {
 
     const addTodo = async title => {
         ShowLoader();
-        const response = await fetch(
-          'https://react-native-1508e.firebaseio.com/todos.json',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title })
-          }
-        );
-        const data = await response.json();
-        dispatch({ type: ADD_TODO, title, id: data.name });
-        HideLoader();
+        ClearError();
+        try {
+            const data = await Http.post(
+                'https://react-native-1508e.firebaseio.com/todos.json',
+                { title },
+            );
+            dispatch({ type: ADD_TODO, title, id: data.name });
+        } catch (e) {
+            ShowError('Что-то не добавляется в список... ;(');
+            console.log(e);
+        } finally {
+            HideLoader();
+        }
+        
     };
 
     const FetchTodos = async () => {
         ShowLoader();
         ClearError();
         try {
-            const response = await fetch(
-                'https://react-native-1508e.firebaseio.com/todos.json',
-                {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                }
+            const data = await Http.get(
+                'https://react-native-1508e.firebaseio.com/todos.json'
             );
-            const data = await response.json();
             const todos = Object.keys(data)
                 .map(key => ({ ...data[key], id: key}));
             dispatch({type: FETCH_TODOS, todos});
@@ -72,12 +71,8 @@ export const TodoState = ({children}) => {
                 text: 'Удалить',
                 style: 'destructive',
                 onPress: async () => {
-                    await fetch(
-                        `https://react-native-1508e.firebaseio.com/todos/${id}.json`,
-                        {
-                            method: 'DELETE',
-                            headers: { 'Content-Type': 'application/json' },
-                        }
+                    await Http.delete(
+                        `https://react-native-1508e.firebaseio.com/todos/${id}.json`
                     );
                     ChangeScreen(null);
                     dispatch({type: REMOVE_TODO, id});;
@@ -93,19 +88,11 @@ export const TodoState = ({children}) => {
         ShowLoader();
         ClearError();
         try {
-            await fetch(
+            await Http.patch(
                 `https://react-native-1508e.firebaseio.com/todos/${id}.json`,
-                {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({title}),
-                }
+                { title },
             );
-            dispatch({
-                type: UPDATE_TODO,
-                id,
-                title,
-            });
+            dispatch({ type: UPDATE_TODO, id, title });
         } catch (e) {
             ShowError('Что-то не обновляется элемент... ;(');
             console.log(e);
