@@ -68,10 +68,21 @@ export const TodoState = ({children}) => {
         `Точно надо удалить "${todo.title}"?`,
         [
             { text: 'Отмена', style: 'cancel' },
-            {text: 'Удалить', style: 'destructive', onPress: () => {
-                ChangeScreen(null);
-                dispatch({type: REMOVE_TODO, id});;
-            }},
+            {
+                text: 'Удалить',
+                style: 'destructive',
+                onPress: async () => {
+                    await fetch(
+                        `https://react-native-1508e.firebaseio.com/todos/${id}.json`,
+                        {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                        }
+                    );
+                    ChangeScreen(null);
+                    dispatch({type: REMOVE_TODO, id});;
+                }
+            },
         ],
         {cancelable: false},
         );
