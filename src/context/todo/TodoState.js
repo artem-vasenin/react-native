@@ -24,6 +24,7 @@ export const TodoState = ({children}) => {
     const [state, dispatch] = useReducer(TodoReducer, initialState);
 
     const addTodo = async title => {
+        ShowLoader();
         const response = await fetch(
           'https://react-native-1508e.firebaseio.com/todos.json',
           {
@@ -34,9 +35,11 @@ export const TodoState = ({children}) => {
         );
         const data = await response.json();
         dispatch({ type: ADD_TODO, title, id: data.name });
+        HideLoader();
     };
 
     const FetchTodos = async () => {
+        ShowLoader();
         const response = await fetch(
             'https://react-native-1508e.firebaseio.com/todos.json',
             {
@@ -48,6 +51,7 @@ export const TodoState = ({children}) => {
         const todos = Object.keys(data)
             .map(key => ({ ...data[key], id: key}));
         dispatch({type: FETCH_TODOS, todos});
+        HideLoader();
     };
 
     const RemoveTodo = id => {

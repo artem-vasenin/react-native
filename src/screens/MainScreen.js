@@ -9,6 +9,7 @@ import { Todo } from '../components/Todo';
 import { AddTodo } from '../components/AddTodo';
 import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/ScreenContext';
+import { AppLoader } from '../ui/AppLoader';
 
 export const MainScreen = () => {
     const {
@@ -39,6 +40,10 @@ export const MainScreen = () => {
     />}
     keyExtractor={item => item.id.toString()}
     />);
+
+    if (loading) {
+        return <AppLoader />
+    }
 
     if (!todos.length) {
         content = (
