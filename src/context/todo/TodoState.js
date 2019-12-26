@@ -40,18 +40,25 @@ export const TodoState = ({children}) => {
 
     const FetchTodos = async () => {
         ShowLoader();
-        const response = await fetch(
-            'https://react-native-1508e.firebaseio.com/todos.json',
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            }
-        );
-        const data = await response.json();
-        const todos = Object.keys(data)
-            .map(key => ({ ...data[key], id: key}));
-        dispatch({type: FETCH_TODOS, todos});
-        HideLoader();
+        ClearError();
+        try {
+            const response = await fetch(
+                'https://react-native-1508e.firebaseio.com/todos.json',
+                {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            );
+            const data = await response.json();
+            const todos = Object.keys(data)
+                .map(key => ({ ...data[key], id: key}));
+            dispatch({type: FETCH_TODOS, todos});
+        } catch (e) {
+            ShowError('Что-то не выводится список... ;(');
+            console.log(e);
+        } finally {
+            HideLoader();
+        }
     };
 
     const RemoveTodo = id => {
@@ -81,7 +88,7 @@ export const TodoState = ({children}) => {
 
     const HideLoader = () => dispatch({ type: HIDE_LOADER });
 
-    const ShowError = err => dispatch({ type: SHOW_ERROR, error });
+    const ShowError = error => dispatch({ type: SHOW_ERROR, error });
 
     const ClearError = () => dispatch({ type: CLEAR_ERROR });
 

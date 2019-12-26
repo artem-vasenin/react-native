@@ -10,6 +10,8 @@ import { AddTodo } from '../components/AddTodo';
 import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/ScreenContext';
 import { AppLoader } from '../ui/AppLoader';
+import { AppTextBold } from '../ui/AppTextBold';
+import { AppButton } from '../ui/AppButton';
 
 export const MainScreen = () => {
     const {
@@ -45,6 +47,20 @@ export const MainScreen = () => {
         return <AppLoader />
     }
 
+    if (error) {
+        return (
+            <View style={styles.center}>
+                <AppTextBold style={styles.error}>
+                    {error}
+                </AppTextBold>
+                <AppButton
+                    onPress={LoadTodos}
+                    style={styles.reload}
+                >Повторить</AppButton>
+            </View>
+        );
+    }
+
     if (!todos.length) {
         content = (
             <View style={styles.imgWrap}>
@@ -78,5 +94,16 @@ const styles = StyleSheet.create({
     img: {
         maxWidth: '100%',
         maxHeight: '100%',
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    error: {
+        color: 'red',
+    },
+    reload: {
+        marginTop: 20,
     }
   });
