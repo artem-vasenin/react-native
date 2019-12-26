@@ -22,7 +22,19 @@ export const TodoState = ({children}) => {
     const { ChangeScreen } = useContext(ScreenContext);
     const [state, dispatch] = useReducer(TodoReducer, initialState);
 
-    const addTodo = title => dispatch({ type: ADD_TODO, title });
+    const addTodo = async title => {
+        const response = await fetch(
+          'https://react-native-1508e.firebaseio.com/todos.json',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title })
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        dispatch({ type: ADD_TODO, title, id: data.name });
+    };
 
     const RemoveTodo = id => {
         const todo = state.todos.find(t => t.id === id);
